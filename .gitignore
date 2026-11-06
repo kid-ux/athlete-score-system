@@ -1,0 +1,20 @@
+# 编译输出
+build/
+bin/
+work/
+qa_check/
+
+# 报告生成依赖（脚本与图片素材保留）
+report_assets/node_modules/
+report_assets/qa/
+
+# 临时检查文件
+g_check.html
+idx_check.html
+
+# 数据库备份（保留主脚本 sportsdb.sql）
+sportsdb_backup_*.sql
+
+# 系统文件
+Thumbs.db
+.DS_Store

@@ -1,0 +1,56 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- 共享顶部导航栏：按登录角色显示不同菜单；含 3D 背景画布 --%>
+<%@ page import="bean.User" %>
+<%!
+    String navAct(String uri, String key) {
+        return uri.contains(key) ? "active" : "";
+    }
+%>
+<%
+    User navUser = (User) session.getAttribute("loginUser");
+    String navUri = request.getRequestURI();
+    String navCtx = request.getContextPath();
+    String navRole = navUser == null ? "guest" : navUser.getRole();
+%>
+<canvas id="bg3d" data-density="<%=request.getAttribute("bgDensity") == null ? "low" : request.getAttribute("bgDensity")%>"></canvas>
+<nav class="topnav">
+    <div class="inner">
+        <a class="brand" href="<%=navUser == null ? navCtx + "/guestServlet" : navCtx + "/index.jsp"%>">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+                <path d="M8 2.5l4 5.2 4-5.2" stroke="#6b7382" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="14.5" r="5.6" fill="#15181e"/>
+                <circle cx="12" cy="14.5" r="5.6" stroke="#6b7382" stroke-width="1.4"/>
+                <path d="M12 11.6l.9 1.8 2 .3-1.45 1.4.35 2-1.8-.95-1.8.95.35-2-1.45-1.4 2-.3z" fill="#fff"/>
+            </svg>
+            <span>校运会 · 成绩管理系统</span>
+        </a>
+        <div class="nav-links">
+            <% if ("admin".equals(navRole)) { %>
+            <a class="<%=navAct(navUri, "eventServlet")%>" href="<%=navCtx%>/eventServlet?op=list">赛事管理</a>
+            <a class="<%=navAct(navUri, "itemServlet")%>" href="<%=navCtx%>/itemServlet?op=list">项目管理</a>
+            <a class="<%=navAct(navUri, "athleteServlet")%>" href="<%=navCtx%>/athleteServlet?op=list">运动员管理</a>
+            <a class="<%=navAct(navUri, "scoreServlet")%>" href="<%=navCtx%>/scoreServlet?op=list">成绩管理</a>
+            <a class="<%=navAct(navUri, "statServlet")%>" href="<%=navCtx%>/statServlet">多维统计</a>
+            <a class="<%=navAct(navUri, "queryServlet")%>" href="<%=navCtx%>/queryServlet">综合查询</a>
+            <% } else if ("athlete".equals(navRole)) { %>
+            <a class="<%=navAct(navUri, "applyServlet")%>" href="<%=navCtx%>/applyServlet">赛事报名</a>
+            <a class="<%=navAct(navUri, "myScoreServlet")%>" href="<%=navCtx%>/myScoreServlet">我的成绩</a>
+            <a class="<%=navAct(navUri, "queryServlet")%>" href="<%=navCtx%>/queryServlet">综合查询</a>
+            <a class="<%=navAct(navUri, "guestServlet")%>" href="<%=navCtx%>/guestServlet">游客浏览</a>
+            <% } else { %>
+            <a class="<%=navAct(navUri, "guestServlet")%>" href="<%=navCtx%>/guestServlet">游客浏览</a>
+            <a class="<%=navAct(navUri, "queryServlet")%>" href="<%=navCtx%>/queryServlet">综合查询</a>
+            <% } %>
+        </div>
+        <div class="nav-user">
+            <% if (navUser != null) { %>
+            <span class="uname"><%=navUser.getUsername()%></span>
+            <span class="role-badge <%="athlete".equals(navRole) ? "athlete" : ""%>"><%="admin".equals(navRole) ? "管理员" : "运动员"%></span>
+            <a class="btnx" href="<%=navCtx%>/logoutServlet" onclick="return confirm('确定退出登录？')">退出</a>
+            <% } else { %>
+            <a class="btnx" href="<%=navCtx%>/login.jsp">登录</a>
+            <a class="btnx primary" href="<%=navCtx%>/register.jsp">注册</a>
+            <% } %>
+        </div>
+    </div>
+</nav>
