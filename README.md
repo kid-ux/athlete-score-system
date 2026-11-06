@@ -1,10 +1,10 @@
 # 运动员比赛成绩管理系统
 
-面向校内体育赛事的运动员比赛成绩管理系统（Web 应用开发实训课程设计，题目八）。
+面向校内体育赛事的运动员比赛成绩管理系统（Web 应用开发实训课程设计）。
 
 ## 技术栈
 
-JSP + Servlet + JavaBean + JavaScript + Bootstrap + MySQL 8.0（MVC 分层，无 Maven / SpringBoot 等框架），Tomcat 10.1，JDK 17。
+JSP + Servlet + JavaBean + JavaScript + Bootstrap + MySQL 8.0（MVC 分层，无 Maven / SpringBoot 等框架），Tomcat 10.1，JDK 27。
 
 ## 功能
 
